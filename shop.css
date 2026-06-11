@@ -1,0 +1,589 @@
+/* ─────────────────────────────────────────────
+   shop.css  —  styles for shop / index page
+   ───────────────────────────────────────────── */
+
+body { background: var(--cream); min-height: 100vh; }
+
+/* ── HEADER ─────────────────────────────────── */
+header {
+  background: linear-gradient(135deg, #FF6B00 0%, #E65100 60%, #BF360C 100%);
+  padding: 20px 16px 28px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+header::before {
+  content: '';
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 160px; height: 160px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 50%;
+}
+header::after {
+  content: '';
+  position: absolute;
+  bottom: -60px; left: -30px;
+  width: 200px; height: 200px;
+  background: rgba(255,255,255,0.04);
+  border-radius: 50%;
+}
+.store-icon {
+  font-size: 42px;
+  margin-bottom: 6px;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.2));
+}
+.store-name {
+  font-family: 'Baloo 2', cursive;
+  font-size: 26px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 0.5px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+.store-name-telugu {
+  font-family: 'Noto Sans Telugu', sans-serif;
+  font-size: 17px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.85);
+  margin-top: 2px;
+}
+.store-tagline {
+  font-size: 12px;
+  color: rgba(255,255,255,0.7);
+  margin-top: 6px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* ── SEARCH ─────────────────────────────────── */
+.search-bar {
+  padding: 16px;
+  background: var(--warm-white);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+.search-input {
+  width: 100%;
+  padding: 12px 16px 12px 42px;
+  border: 2px solid var(--border);
+  border-radius: 50px;
+  font-size: 14px;
+  font-family: 'DM Sans', sans-serif;
+  background: var(--cream);
+  color: var(--text-dark);
+  outline: none;
+  transition: border 0.2s;
+}
+.search-input:focus { border-color: var(--saffron); }
+.search-wrap { position: relative; }
+.search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+}
+
+/* ── BANNER ─────────────────────────────────── */
+.shop-banner {
+  display: none;
+  width: 100%;
+  background: #ffffff;
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 10px 0;
+  border-bottom: 1px solid #e0e0e0;
+  position: relative;
+}
+.shop-banner.visible { display: block; }
+.banner-content {
+  display: inline-block;
+  color: #2E7D32;
+  font-size: 14px;
+  font-weight: 600;
+  animation: scrollBanner 30s linear infinite reverse;
+}
+@keyframes scrollBanner {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+.banner-close {
+  position: absolute;
+  right: 12px; top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.08);
+  border: none;
+  border-radius: 50%;
+  width: 22px; height: 22px;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* ── CATEGORIES ─────────────────────────────── */
+.categories {
+  display: flex;
+  gap: 8px;
+  padding: 12px 16px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  background: var(--warm-white);
+  border-bottom: 1px solid var(--border);
+}
+.categories::-webkit-scrollbar { display: none; }
+.cat-chip {
+  padding: 6px 16px;
+  border-radius: 50px;
+  border: 1.5px solid var(--border);
+  background: white;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+  color: var(--text-mid);
+}
+.cat-chip.active {
+  background: var(--saffron);
+  border-color: var(--saffron);
+  color: white;
+  box-shadow: 0 2px 10px rgba(255,107,0,0.3);
+}
+
+/* ── PRODUCTS ───────────────────────────────── */
+.products-section { padding: 16px; }
+.section-title {
+  font-family: 'Baloo 2', cursive;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-title span.telugu {
+  font-size: 14px;
+  color: var(--text-soft);
+  font-weight: 400;
+}
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+.product-card {
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--card-shadow);
+  transition: all 0.3s ease;
+  border: 1.5px solid var(--border);
+  animation: fadeUp 0.4s ease both;
+}
+.product-card:hover {
+  box-shadow: 0 8px 32px rgba(255,107,0,0.18);
+  transform: translateY(-2px);
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.product-img {
+  width: 100%;
+  height: 110px;
+  object-fit: cover;
+  background: linear-gradient(135deg, #FFF3E0, #FFE0B2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+}
+.product-body { padding: 10px 10px 12px; }
+.product-name {
+  font-family: 'Baloo 2', cursive;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-dark);
+  line-height: 1.2;
+}
+.product-name-tel {
+  font-family: 'Noto Sans Telugu', sans-serif;
+  font-size: 11px;
+  color: var(--text-soft);
+  margin-top: 1px;
+}
+.product-unit { font-size: 11px; color: var(--text-soft); margin-top: 3px; }
+.product-price {
+  font-family: 'Baloo 2', cursive;
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--saffron);
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+.product-price span { font-size: 12px; font-weight: 400; color: var(--text-soft); }
+.price-mrp {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-soft);
+  text-decoration: line-through;
+}
+.price-discount {
+  font-size: 10px;
+  font-weight: 700;
+  background: #E8F5E9;
+  color: #2E7D32;
+  padding: 2px 6px;
+  border-radius: 50px;
+}
+
+/* ── QTY VARIANT CHIPS ──────────────────────── */
+.qty-variants {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 7px;
+  margin-bottom: 4px;
+}
+.qty-chip {
+  padding: 4px 10px;
+  border-radius: 50px;
+  border: 1.5px solid var(--border);
+  background: white;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--text-mid);
+  transition: all 0.15s;
+}
+.qty-chip.selected {
+  background: var(--saffron);
+  border-color: var(--saffron);
+  color: white;
+}
+
+/* ── QTY CONTROLS ───────────────────────────── */
+.qty-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8px;
+}
+.qty-btn {
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s;
+}
+.qty-minus { background: var(--border); color: var(--text-mid); }
+.qty-minus:hover { background: #ddd; }
+.qty-plus { background: var(--saffron); color: white; }
+.qty-plus:hover { background: var(--saffron-light); }
+.qty-num {
+  font-family: 'Baloo 2', cursive;
+  font-size: 16px;
+  font-weight: 700;
+  min-width: 28px;
+  text-align: center;
+}
+.add-btn {
+  width: 100%;
+  padding: 8px;
+  background: var(--saffron-glow);
+  border: 1.5px solid var(--saffron);
+  color: var(--saffron);
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Baloo 2', cursive;
+  transition: all 0.2s;
+  margin-top: 8px;
+}
+.add-btn:hover, .add-btn.added { background: var(--saffron); color: white; }
+.add-btn.added { background: var(--green); border-color: var(--green); }
+
+/* ── LOADING ─────────────────────────────────── */
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  gap: 16px;
+}
+.spinner {
+  width: 40px; height: 40px;
+  border: 3px solid var(--border);
+  border-top-color: var(--saffron);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-text { color: var(--text-soft); font-size: 14px; }
+
+/* ── CART FAB ────────────────────────────────── */
+.cart-fab {
+  position: fixed;
+  bottom: 24px; right: 20px;
+  background: var(--green);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding: 14px 20px;
+  font-family: 'Baloo 2', cursive;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(46,125,50,0.4);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+  z-index: 999;
+  transform: translateY(100px);
+  opacity: 0;
+}
+.cart-fab.visible { transform: translateY(0); opacity: 1; }
+.cart-fab:hover {
+  background: var(--green-light);
+  box-shadow: 0 6px 28px rgba(46,125,50,0.5);
+}
+.cart-count {
+  background: #fff;
+  color: var(--green);
+  border-radius: 50%;
+  width: 22px; height: 22px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+/* ── CART DRAWER ─────────────────────────────── */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+.overlay.open { opacity: 1; pointer-events: all; }
+
+.cart-drawer {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: white;
+  border-radius: 24px 24px 0 0;
+  z-index: 1001;
+  max-height: 92vh;
+  overflow-y: auto;
+  transform: translateY(100%);
+  transition: transform 0.4s cubic-bezier(0.32,0.72,0,1);
+  padding: 0 0 32px;
+}
+.cart-drawer.open { transform: translateY(0); }
+.drawer-handle {
+  width: 40px; height: 4px;
+  background: #ddd;
+  border-radius: 2px;
+  margin: 12px auto 0;
+}
+.drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+}
+.drawer-title {
+  font-family: 'Baloo 2', cursive;
+  font-size: 20px;
+  font-weight: 800;
+}
+.close-btn {
+  background: var(--border);
+  border: none;
+  border-radius: 50%;
+  width: 32px; height: 32px;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* ── CART ITEMS ──────────────────────────────── */
+.cart-items { padding: 12px 20px; }
+.cart-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+.cart-item-emoji { font-size: 28px; }
+.cart-item-info { flex: 1; }
+.cart-item-name { font-weight: 600; font-size: 14px; }
+.cart-item-price { font-size: 12px; color: var(--text-soft); }
+.cart-item-controls { display: flex; align-items: center; gap: 8px; }
+.ci-btn {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+}
+.ci-minus { background: var(--border); color: var(--text-mid); }
+.ci-plus  { background: var(--saffron); color: white; }
+.ci-qty   { font-weight: 700; min-width: 20px; text-align: center; font-size: 15px; }
+.ci-del   { background: none; border: none; color: #e53935; cursor: pointer; font-size: 18px; padding: 4px; }
+
+.cart-total {
+  margin: 12px 20px;
+  background: var(--saffron-glow);
+  border-radius: 12px;
+  padding: 14px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.cart-total-label { font-size: 14px; color: var(--text-mid); }
+.cart-total-amount {
+  font-family: 'Baloo 2', cursive;
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--saffron);
+}
+.empty-cart { text-align: center; padding: 40px 20px; color: var(--text-soft); }
+.empty-cart .emoji { font-size: 48px; margin-bottom: 12px; }
+
+/* ── ORDER FORM ──────────────────────────────── */
+.order-form { padding: 0 20px; }
+.form-section-title {
+  font-family: 'Baloo 2', cursive;
+  font-size: 16px;
+  font-weight: 700;
+  margin: 16px 0 10px;
+  color: var(--text-dark);
+  display: flex; align-items: center; gap: 6px;
+}
+.form-group { margin-bottom: 10px; }
+.form-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-soft);
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.form-input, .form-textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  font-size: 14px;
+  font-family: 'DM Sans', sans-serif;
+  color: var(--text-dark);
+  background: var(--cream);
+  outline: none;
+  transition: border 0.2s;
+}
+.form-input:focus, .form-textarea:focus { border-color: var(--saffron); }
+.form-textarea { resize: vertical; min-height: 70px; }
+.form-note { font-size: 11px; color: var(--text-soft); margin-top: 4px; }
+
+.place-order-btn {
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(135deg, #2E7D32, #43A047);
+  color: white;
+  border: none;
+  border-radius: 14px;
+  font-family: 'Baloo 2', cursive;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 20px;
+  box-shadow: 0 4px 16px rgba(46,125,50,0.3);
+  transition: all 0.2s;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.place-order-btn:hover {
+  box-shadow: 0 6px 24px rgba(46,125,50,0.45);
+  transform: translateY(-1px);
+}
+.place-order-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+/* ── SUCCESS SCREEN ──────────────────────────── */
+.success-screen {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+  text-align: center;
+}
+.success-screen.show { display: flex; }
+.success-icon { font-size: 64px; animation: pop 0.4s ease; }
+@keyframes pop {
+  0%   { transform: scale(0); }
+  80%  { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+.success-title {
+  font-family: 'Baloo 2', cursive;
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--green);
+  margin-top: 16px;
+}
+.success-subtitle { color: var(--text-soft); font-size: 14px; margin-top: 8px; line-height: 1.5; }
+.success-tel {
+  font-family: 'Noto Sans Telugu', sans-serif;
+  font-size: 14px;
+  color: var(--text-soft);
+  margin-top: 4px;
+}
+.new-order-btn {
+  margin-top: 24px;
+  padding: 12px 32px;
+  background: var(--saffron);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  font-family: 'Baloo 2', cursive;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* ── MISC ────────────────────────────────────── */
+.no-items { text-align: center; padding: 40px 20px; color: var(--text-soft); font-size: 14px; }
+
+.config-banner {
+  background: #FFF3E0;
+  border: 1.5px dashed var(--saffron);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin: 16px;
+  font-size: 13px;
+  color: var(--text-mid);
+  line-height: 1.6;
+}
+.config-banner strong { color: var(--saffron); }

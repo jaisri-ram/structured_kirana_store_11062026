@@ -1,0 +1,31 @@
+/* ─────────────────────────────────────────────
+   common.css  —  shared across shop + admin
+   ───────────────────────────────────────────── */
+
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Noto+Sans+Telugu:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap');
+
+:root {
+  --saffron:       #FF6B00;
+  --saffron-light: #FF8C3A;
+  --saffron-glow:  rgba(255,107,0,0.1);
+  --green:         #2E7D32;
+  --green-light:   #43A047;
+  --red:           #C62828;
+  --blue:          #1565C0;
+  --cream:         #FFF8F0;
+  --warm-white:    #FFFDF9;
+  --border:        #E8D8C8;
+  --text-dark:     #1A1208;
+  --text-mid:      #4A3728;
+  --text-soft:     #8D6E63;
+  --card-shadow:   0 2px 16px rgba(0,0,0,0.08);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  color: var(--text-dark);
+}
+
+.telugu { font-family: 'Noto Sans Telugu', sans-serif; }

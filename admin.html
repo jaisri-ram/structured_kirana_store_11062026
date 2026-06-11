@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel — Grocery Store</title>
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+<!-- LOGIN SCREEN -->
+<div class="login-screen" id="loginScreen">
+  <div class="login-box">
+    <div class="login-icon">🔐</div>
+    <div class="login-title">Admin Login</div>
+    <div class="login-sub">Jai Sri Ram Grocery Store<br>Enter password to continue</div>
+    <div class="login-error" id="loginError">❌ Wrong password! Try again.</div>
+    <input class="login-input" id="passwordInput" type="password"
+      placeholder="Enter Password"
+      onkeydown="if(event.key==='Enter') checkLogin()">
+    <button class="login-btn" onclick="checkLogin()">🔓 Login</button>
+  </div>
+</div>
+
+<!-- SETTINGS MODAL -->
+<div class="settings-overlay" id="settingsOverlay">
+  <div class="settings-modal">
+    <div class="settings-header">
+      <div class="settings-title">⚙️ Settings</div>
+      <button class="settings-close" onclick="closeSettings()">✕</button>
+    </div>
+
+    <div class="settings-section">
+      <div class="settings-section-title">📢 Shop Banner Message</div>
+      <div class="settings-msg" id="bannerMsg"></div>
+      <textarea class="settings-input" id="bannerTextInput" rows="3"
+        placeholder="e.g. 🎉 Grand Sale! 20% off on all orders above ₹500 this weekend only!"
+        style="resize:vertical;min-height:80px;letter-spacing:normal;"></textarea>
+      <label style="display:flex;align-items:center;gap:8px;margin:8px 0;font-size:13px;cursor:pointer;">
+        <input type="checkbox" id="bannerActiveCheck" checked style="width:16px;height:16px;accent-color:var(--saffron);">
+        <span>Show banner on shop page</span>
+      </label>
+      <button class="settings-btn settings-btn-green" onclick="saveBanner()">📢 Save Banner</button>
+      <p class="settings-note">Banner appears at the top of the shop page for all customers.</p>
+    </div>
+
+    <div class="settings-section">
+      <div class="settings-section-title">🔑 Change Password</div>
+      <div class="settings-msg" id="pwdMsg"></div>
+      <input class="settings-input pwd-input" id="currentPwdInput" type="password" placeholder="Current password">
+      <input class="settings-input pwd-input" id="newPwdInput"     type="password" placeholder="New password (min 4 chars)">
+      <input class="settings-input pwd-input" id="confirmPwdInput" type="password" placeholder="Confirm new password">
+      <button class="settings-btn settings-btn-blue" onclick="changePassword()">🔑 Update Password</button>
+    </div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div>
+    <div class="header-title">🏪 Admin Panel</div>
+    <div class="header-sub">Jai Sri Ram Grocery Store</div>
+  </div>
+  <div class="admin-header-right">
+    <button class="settings-icon-btn" onclick="openSettings()">⚙️ Settings</button>
+    <button class="logout-btn" onclick="logout()">🚪 Logout</button>
+  </div>
+</header>
+
+<!-- TABS -->
+<div class="tabs">
+  <div class="tab active" onclick="switchTab('items')">📦 Items</div>
+  <div class="tab"        onclick="switchTab('orders')">🛒 Orders</div>
+</div>
+
+<!-- ══ ITEMS TAB ══ -->
+<div class="tab-content active" id="tab-items">
+  <input class="search-input" id="itemSearchInput" type="text"
+    placeholder="🔍 Search by name, category, price, unit..."
+    oninput="applyItemFilter()">
+  <div class="panel-header">
+    <div class="panel-title">Product Items</div>
+    <button class="add-btn-top" onclick="openAddModal()">+ Add Item</button>
+  </div>
+  <div id="itemsList"><div class="loading-orders">Loading items...</div></div>
+</div>
+
+<!-- ══ ORDERS TAB ══ -->
+<div class="tab-content" id="tab-orders">
+  <div class="stats-row" id="statsRow">
+    <div class="stat-card"><div class="stat-num" id="statTotal">0</div><div class="stat-label">Total Orders</div></div>
+    <div class="stat-card"><div class="stat-num" id="statNew">0</div><div class="stat-label">New Orders</div></div>
+    <div class="stat-card"><div class="stat-num" id="statRevenue">₹0</div><div class="stat-label">Total Revenue</div></div>
+  </div>
+
+  <div class="panel-header">
+    <div class="panel-title">Incoming Orders</div>
+    <button class="add-btn-top" onclick="loadOrders()" style="background:#1565C0">🔄 Refresh</button>
+  </div>
+
+  <div class="orders-filter-row">
+    <input class="search-input" id="searchInput" type="text"
+      placeholder="Search by Order ID, Name, Phone, Amount, Status..."
+      oninput="applyOrderFilters()" style="flex:2;min-width:200px;">
+    <select class="search-input" id="dateFilter" style="flex:1;min-width:140px;" onchange="applyOrderFilters()">
+      <option value="">All Dates</option>
+      <option value="today">Today</option>
+      <option value="yesterday">Yesterday</option>
+      <option value="currentWeek">Current Week</option>
+      <option value="lastWeek">Last Week</option>
+      <option value="currentMonth">Current Month</option>
+      <option value="lastMonth">Last Month</option>
+      <option value="custom">Custom Range</option>
+    </select>
+    <input type="date" id="fromDate" class="search-input" style="flex:1;min-width:130px;display:none" onchange="applyOrderFilters()">
+    <input type="date" id="toDate"   class="search-input" style="flex:1;min-width:130px;display:none" onchange="applyOrderFilters()">
+  </div>
+
+  <div id="ordersList"><div class="loading-orders">Click Refresh to load orders...</div></div>
+</div>
+
+<!-- ══ ADD / EDIT MODAL ══ -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <div class="modal-title" id="modalTitle">➕ Add New Item</div>
+
+    <div class="form-group">
+      <label class="form-label">Item Name (English) *</label>
+      <input class="form-input" id="fName" placeholder="e.g. Basmati Rice">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Item Name (Telugu) తెలుగు పేరు</label>
+      <input class="form-input" id="fNameTel" placeholder="e.g. బాస్మతి బియ్యం">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Category</label>
+      <input class="form-input" id="fCat" list="catList" placeholder="e.g. Grains">
+      <datalist id="catList">
+        <option value="Grains"><option value="Pulses"><option value="Spices">
+        <option value="Oils"><option value="Essentials"><option value="Snacks">
+        <option value="Dairy"><option value="Beverages"><option value="Dry Fruits">
+      </datalist>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Product Image</label>
+      <div style="border:2px dashed var(--border);border-radius:12px;padding:14px;background:#FAFAFA;">
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;margin-bottom:6px;">
+          <span style="background:var(--saffron);color:white;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;white-space:nowrap;">
+            📁 Upload Image
+          </span>
+          <span style="font-size:12px;color:var(--text-soft);">JPG, PNG, WEBP — auto compressed to 200×200 ≤20KB</span>
+          <input type="file" id="fImageFile" accept="image/*" style="display:none" onchange="handleImageUpload(this)">
+        </label>
+        <div id="imgSizeHint" style="font-size:11px;color:#2E7D32;margin-bottom:4px;font-weight:600;"></div>
+        <div id="imagePreviewWrap" style="display:none;text-align:center;margin-top:8px;">
+          <img id="imagePreview" src=""
+            style="max-height:90px;max-width:100%;border-radius:8px;object-fit:cover;border:1px solid var(--border);">
+          <button type="button" onclick="clearImage()"
+            style="display:block;margin:6px auto 0;background:none;border:none;color:#C62828;font-size:12px;cursor:pointer;">
+            ✕ Remove
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">MRP Price (₹)</label>
+        <input class="form-input" id="fMrp" type="number" placeholder="100">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Offer Price (₹) *</label>
+        <input class="form-input" id="fPrice" type="number" placeholder="85">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Quantity Options (shown to customer)</label>
+      <div style="font-size:12px;color:var(--text-soft);margin-bottom:8px;">
+        Enter comma-separated values the customer can choose from
+      </div>
+      <input class="form-input" id="fQtyOptions" placeholder="e.g. 200g, 500g, 1kg  or  1 piece, 2 pieces">
+      <div style="font-size:11px;color:var(--text-soft);margin-top:5px;">
+        Leave blank to use the Unit field for display only
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Unit / Display Label</label>
+      <input class="form-input" id="fUnit" list="unitList" placeholder="per kg">
+      <datalist id="unitList">
+        <option value="per kg"><option value="per gram"><option value="per litre">
+        <option value="per 100g"><option value="per 250g"><option value="per 500g">
+        <option value="per piece"><option value="per dozen"><option value="per packet">
+      </datalist>
+    </div>
+
+    <div class="modal-actions">
+      <button class="cancel-btn" onclick="closeModal()">Cancel</button>
+      <button class="save-btn"   onclick="saveItem()">💾 Save Item</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>

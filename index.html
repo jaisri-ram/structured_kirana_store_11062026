@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jai Sri Ram Grocery Store</title>
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/shop.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="store-icon">🏪</div>
+  <div class="store-name">Jai Sri Ram Grocery Store</div>
+  <div class="store-name-telugu telugu">జై శ్రీ రామ్ కిరాణా దుకాణం</div>
+  <div class="store-tagline">Fresh • Quality • Delivered to You</div>
+</header>
+
+<!-- SEARCH -->
+<div class="search-bar">
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input class="search-input" id="searchInput" type="text"
+      placeholder="Search items... వస్తువులు వెతకండి" oninput="filterProducts()">
+  </div>
+</div>
+
+<!-- BANNER -->
+<div class="shop-banner" id="shopBanner">
+  <div class="banner-content" id="banner-content"></div>
+  <button class="banner-close" onclick="document.getElementById('shopBanner').classList.remove('visible')" title="Close">✕</button>
+</div>
+
+<!-- CATEGORIES -->
+<div class="categories" id="categoriesBar"></div>
+
+<!-- PRODUCTS -->
+<div class="products-section">
+  <div class="section-title">
+    Our Items <span class="telugu">మా వస్తువులు</span>
+  </div>
+  <div id="productsGrid" class="products-grid">
+    <div class="loading">
+      <div class="spinner"></div>
+      <div class="loading-text">Loading items... వస్తువులు లోడ్ అవుతున్నాయి</div>
+    </div>
+  </div>
+</div>
+
+<!-- CART FAB -->
+<button class="cart-fab" id="cartFab" onclick="openCart()">
+  🛒 View Cart <span class="cart-count" id="cartCount">0</span>
+</button>
+
+<!-- OVERLAY -->
+<div class="overlay" id="overlay" onclick="closeCart()"></div>
+
+<!-- CART DRAWER -->
+<div class="cart-drawer" id="cartDrawer">
+  <div class="drawer-handle"></div>
+
+  <div id="cartContent">
+    <div class="drawer-header">
+      <div class="drawer-title">🛒 Your Cart
+        <span class="telugu" style="font-size:14px;color:var(--text-soft);font-weight:400;"> మీ కార్ట్</span>
+      </div>
+      <button class="close-btn" onclick="closeCart()">✕</button>
+    </div>
+
+    <div class="cart-items" id="cartItemsList"></div>
+
+    <div class="cart-total" id="cartTotal" style="display:none">
+      <div>
+        <div class="cart-total-label">Total Amount</div>
+        <div class="telugu" style="font-size:11px;color:var(--text-soft)">మొత్తం మొత్తం</div>
+      </div>
+      <div class="cart-total-amount" id="totalAmount">₹0</div>
+    </div>
+
+    <div class="order-form" id="orderFormSection" style="display:none">
+      <div class="form-section-title">📦 Delivery Details
+        <span class="telugu" style="font-size:13px;color:var(--text-soft);font-weight:400;">డెలివరీ వివరాలు</span>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Your Name / మీ పేరు *</label>
+        <input class="form-input" id="custName" type="text" placeholder="Enter your name">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Phone Number / ఫోన్ నంబర్ *</label>
+        <input class="form-input" id="custPhone" type="tel" placeholder="10-digit mobile number" maxlength="10">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Delivery Address / డెలివరీ చిరునామా *</label>
+        <textarea class="form-textarea" id="custAddress" placeholder="House No, Street, Landmark, Area..."></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Special Notes / ప్రత్యేక గమనికలు</label>
+        <input class="form-input" id="custNotes" type="text" placeholder="Any special instructions (optional)">
+      </div>
+      <p class="form-note">💳 Payment on delivery. Cash accepted. / డెలివరీ సమయంలో చెల్లింపు.</p>
+      <button class="place-order-btn" id="placeOrderBtn" onclick="placeOrder()">
+        ✅ Place Order / ఆర్డర్ పెట్టండి
+      </button>
+    </div>
+  </div>
+
+  <!-- Success Screen -->
+  <div class="success-screen" id="successScreen">
+    <div class="success-icon">🎉</div>
+    <div class="success-title">Order Placed!</div>
+    <div class="success-subtitle">Your order has been received. We'll deliver soon and collect payment on delivery.</div>
+    <div class="success-tel telugu">మీ ఆర్డర్ అందుకోబడింది. మేము త్వరలో డెలివరీ చేస్తాము.</div>
+    <button class="new-order-btn" onclick="newOrder()">🛒 New Order / కొత్త ఆర్డర్</button>
+  </div>
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
+<script src="js/shop.js"></script>
+</body>
+</html>
